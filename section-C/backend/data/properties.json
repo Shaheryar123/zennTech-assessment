@@ -1,0 +1,35 @@
+[
+  {
+    "id": "ca8913ea-ec5f-44b7-89fd-0a31a74df8f6",
+    "projectId": "proj_3",
+    "projectName": "Palm View Villas",
+    "title": "Luxary 3 bedroom appartment",
+    "size": 1200,
+    "price": 92000,
+    "handoverDate": "2025-09-24",
+    "createdAt": "2025-06-28T14:38:43.247Z",
+    "updatedAt": "2025-06-28T14:38:43.247Z"
+  },
+  {
+    "id": "c2b95361-fa2d-42e4-a106-b22e79f5473d",
+    "projectId": "proj_4",
+    "projectName": "Business Bay Heights",
+    "title": "Vero fugiat laboriosam iure eu officia officiis fugiat",
+    "size": 25,
+    "price": 940,
+    "handoverDate": "2025-11-27",
+    "createdAt": "2025-06-28T14:39:49.826Z",
+    "updatedAt": "2025-06-28T14:39:49.826Z"
+  },
+  {
+    "id": "941f4fc4-7452-4228-9416-5f11a7a10395",
+    "projectId": "proj_4",
+    "projectName": "Business Bay Heights",
+    "title": "Harum unde non culpa neque aut sed nesciunt eos corrupti dolor incididunt sequi autem ipsa",
+    "size": 26,
+    "price": 915,
+    "handoverDate": "2026-08-27",
+    "createdAt": "2025-06-29T11:19:27.625Z",
+    "updatedAt": "2025-06-29T11:19:27.625Z"
+  }
+]
