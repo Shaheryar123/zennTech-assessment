@@ -1,0 +1,11 @@
+# Claude (Anthropic) API Configuration
+ANTHROPIC_API_KEY=your_claude_api_key
+
+# Application Configuration
+PORT=3002
+NODE_ENV=development
+
+# AI Model Settings
+AI_MODEL=claude-2.1
+AI_TEMPERATURE=0.7
+MAX_TOKENS=250

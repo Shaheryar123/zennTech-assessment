@@ -1,0 +1,30 @@
+{
+  "name": "property-marketing-generator",
+  "version": "1.0.0",
+  "description": "AI-assisted tool for generating compelling property marketing descriptions",
+  "main": "property-marketing-generator.js",
+  "scripts": {
+    "start": "node property-marketing-generator.js",
+    "demo": "node demo.js",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "real-estate",
+    "marketing",
+    "ai-assisted",
+    "property-description",
+    "automation"
+  ],
+  "author": "ZennTech Development Team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "lodash": "^4.17.21",
+    "@anthropic-ai/sdk": "^0.9.1",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+} 

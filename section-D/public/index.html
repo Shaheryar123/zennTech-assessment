@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Marketing Description Generator | ZennTech</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #2563eb, #3b82f6);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .form-section {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .form-section h2 {
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .amenity-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .amenity-checkbox input[type="checkbox"] {
+            width: auto;
+        }
+
+        .generate-btn {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .generate-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results-section {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .results-section h2 {
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .result-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .result-card h3 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .description-text {
+            line-height: 1.6;
+            color: #374151;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f1f5f9;
+            border-left: 4px solid #3b82f6;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .metadata {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .metadata-item {
+            text-align: center;
+            padding: 10px;
+            background: #e0f2fe;
+            border-radius: 6px;
+        }
+
+        .metadata-item .label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metadata-item .value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .variations {
+            margin-top: 20px;
+        }
+
+        .variation-item {
+            background: #fef7f7;
+            border: 1px solid #fecaca;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #e2e8f0;
+            border-radius: 50%;
+            border-top-color: #3b82f6;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .amenities-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 Property Marketing Generator</h1>
+            <p>AI-Assisted Rapid Prototyping Tool for Real Estate Marketing</p>
+        </div>
+
+        <div class="main-content">
+            <div class="form-section">
+                <h2>Property Details</h2>
+                <form id="propertyForm">
+                    <div class="form-group">
+                        <label for="bedrooms">Bedrooms</label>
+                        <select id="bedrooms" name="bedrooms" required>
+                            <option value="">Select bedrooms</option>
+                            <option value="1">1 Bedroom</option>
+                            <option value="2">2 Bedrooms</option>
+                            <option value="3">3 Bedrooms</option>
+                            <option value="4">4 Bedrooms</option>
+                            <option value="5">5+ Bedrooms</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bathrooms">Bathrooms</label>
+                        <select id="bathrooms" name="bathrooms" required>
+                            <option value="">Select bathrooms</option>
+                            <option value="1">1 Bathroom</option>
+                            <option value="2">2 Bathrooms</option>
+                            <option value="3">3 Bathrooms</option>
+                            <option value="4">4+ Bathrooms</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="size">Size (sq ft)</label>
+                        <input type="number" id="size" name="size" placeholder="e.g., 1200" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" name="location" placeholder="e.g., Downtown Dubai" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="text" id="price" name="price" placeholder="e.g., $450,000" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="propertyType">Property Type</label>
+                        <select id="propertyType" name="propertyType">
+                            <option value="apartment">Apartment</option>
+                            <option value="villa">Villa</option>
+                            <option value="townhouse">Townhouse</option>
+                            <option value="penthouse">Penthouse</option>
+                            <option value="studio">Studio</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Amenities</label>
+                        <div class="amenities-grid">
+                            <div class="amenity-checkbox">
+                                <input type="checkbox" id="pool" value="pool">
+                                <label for="pool">Pool</label>
+                            </div>
+                            <div class="amenity-checkbox">
+                                <input type="checkbox" id="gym" value="gym">
+                                <label for="gym">Gym</label>
+                            </div>
+                            <div class="amenity-checkbox">
+                                <input type="checkbox" id="parking" value="parking">
+                                <label for="parking">Parking</label>
+                            </div>
+                            <div class="amenity-checkbox">
+                                <input type="checkbox" id="balcony" value="balcony">
+                                <label for="balcony">Balcony</label>
+                            </div>
+                            <div class="amenity-checkbox">
+                                <input type="checkbox" id="security" value="security">
+                                <label for="security">Security</label>
+                            </div>
+                            <div class="amenity-checkbox">
+                                <input type="checkbox" id="garden" value="garden">
+                                <label for="garden">Garden</label>
+                            </div>
+                            <div class="amenity-checkbox">
+                                <input type="checkbox" id="view" value="view">
+                                <label for="view">City View</label>
+                            </div>
+                            <div class="amenity-checkbox">
+                                <input type="checkbox" id="kitchen" value="kitchen">
+                                <label for="kitchen">Modern Kitchen</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="generate-btn" id="generateBtn">
+                        ✨ Generate Marketing Description
+                    </button>
+                </form>
+            </div>
+
+            <div class="results-section">
+                <h2>Generated Descriptions</h2>
+                <div id="results">
+                    <div style="text-align: center; padding: 40px; color: #64748b;">
+                        <p>Fill in the property details and click "Generate" to see AI-powered marketing descriptions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('propertyForm');
+        const resultsDiv = document.getElementById('results');
+        const generateBtn = document.getElementById('generateBtn');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Get form values directly from elements
+            const amenities = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                .map(cb => cb.value);
+            
+            const propertyData = {
+                bedrooms: document.getElementById('bedrooms').value,
+                bathrooms: document.getElementById('bathrooms').value,
+                size: parseInt(document.getElementById('size').value),
+                location: document.getElementById('location').value,
+                price: document.getElementById('price').value,
+                propertyType: document.getElementById('propertyType').value,
+                amenities: amenities
+            };
+
+            // Validate required fields
+            if (!propertyData.bedrooms || !propertyData.bathrooms || !propertyData.size || 
+                !propertyData.location || !propertyData.price) {
+                displayError('Please fill in all required fields');
+                return;
+            }
+
+            console.log('Sending property data:', propertyData);
+
+            try {
+                generateBtn.disabled = true;
+                generateBtn.textContent = '⏳ Generating...';
+                
+                resultsDiv.innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>AI is crafting your property description...</p>
+                    </div>
+                `;
+
+                const response = await fetch('http://localhost:3002/generate-description', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(propertyData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    displayResults(result.data);
+                } else {
+                    displayError(result.error);
+                }
+            } catch (error) {
+                displayError('Failed to generate description. Please try again.');
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.textContent = '✨ Generate Marketing Description';
+            }
+        });
+
+        function displayResults(data) {
+            resultsDiv.innerHTML = `
+                <div class="result-card">
+                    <h3>🎯 Primary Description (${data.tier.toUpperCase()})</h3>
+                    <div class="description-text">${data.primaryDescription}</div>
+                    
+                    <div class="metadata">
+                        <div class="metadata-item">
+                            <div class="label">Words</div>
+                            <div class="value">${data.wordCount}</div>
+                        </div>
+                        <div class="metadata-item">
+                            <div class="label">Readability</div>
+                            <div class="value">${data.readabilityScore}%</div>
+                        </div>
+                        <div class="metadata-item">
+                            <div class="label">Tier</div>
+                            <div class="value">${data.tier}</div>
+                        </div>
+                        <div class="metadata-item">
+                            <div class="label">Amenities</div>
+                            <div class="value">${data.enhancedAmenities}</div>
+                        </div>
+                    </div>
+                </div>
+
+                ${data.variations && data.variations.length > 0 ? `
+                    <div class="result-card">
+                        <h3>🔄 Alternative Variations</h3>
+                        <div class="variations">
+                            ${data.variations.map((variation, index) => `
+                                <div class="variation-item">
+                                    <strong>Variation ${index + 1}:</strong> ${variation}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+        }
+
+        function displayError(error) {
+            resultsDiv.innerHTML = `
+                <div class="error">
+                    <strong>Error:</strong> ${error}
+                </div>
+            `;
+        }
+
+        // Sample data for quick testing
+        function loadSampleData() {
+            document.getElementById('bedrooms').value = '3';
+            document.getElementById('bathrooms').value = '2';
+            document.getElementById('size').value = '1850';
+            document.getElementById('location').value = 'Business Bay, Dubai';
+            document.getElementById('price').value = '$650,000';
+            document.getElementById('propertyType').value = 'apartment';
+            document.getElementById('pool').checked = true;
+            document.getElementById('gym').checked = true;
+            document.getElementById('parking').checked = true;
+            document.getElementById('view').checked = true;
+        }
+
+        // Add sample data button
+        setTimeout(() => {
+            const sampleBtn = document.createElement('button');
+            sampleBtn.textContent = '📝 Load Sample Data';
+            sampleBtn.type = 'button';
+            sampleBtn.style.cssText = 'margin-top: 10px; padding: 10px 20px; background: #f59e0b; color: white; border: none; border-radius: 6px; cursor: pointer;';
+            sampleBtn.onclick = loadSampleData;
+            form.appendChild(sampleBtn);
+        }, 1000);
+    </script>
+</body>
+</html> 
